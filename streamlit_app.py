@@ -2,6 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import streamlit as st
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+path_to_chrome_driver = os.path.join(BASE_DIR, 'chromedriver.exe')
 
 
 def download_pdf_using_selenium(url, dir):
@@ -18,7 +22,7 @@ def download_pdf_using_selenium(url, dir):
         })
 
         # Set up the Chrome driver
-        service = Service('chromedriver.exe')
+        service = Service(path_to_chrome_driver)
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         # Open the URL
@@ -40,11 +44,7 @@ def download_pdf_using_selenium(url, dir):
     st.write(f"Existing the function download_pdf_using_selenium.")
 
 
-import os
-
-
 if st.button("download files"):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     print(BASE_DIR)
     output_dir = os.path.join(BASE_DIR, 'Input')
     print(output_dir)
