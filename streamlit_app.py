@@ -6,6 +6,8 @@ from selenium.common.exceptions import WebDriverException
 import time
 import os
 
+from chrome_vesion import get_chromedriver_path
+
 # Determine the absolute path to the directory containing this file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_DIR = os.path.join(BASE_DIR, 'Input')
@@ -14,8 +16,8 @@ INPUT_DIR = os.path.join(BASE_DIR, 'Input')
 st.write(f"Temporary directory for downloads: {INPUT_DIR}")
 
 # Update the path to ChromeDriver (without .exe)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-path_to_chrome_driver = os.path.join(BASE_DIR, 'chromedriver.exe')
+path_to_chrome_driver = get_chromedriver_path()
+st.info(f"Chrome Driver Path is:- {path_to_chrome_driver}")
 
 st.write(f"ChromeDriver path: {path_to_chrome_driver}")
 
@@ -46,16 +48,16 @@ def download_pdf_using_selenium(url, dir):
         # Close the browser
         driver.quit()
         print("PDF downloaded successfully!")
+        st.success("PDF downloaded successfully!")
 
     except FileNotFoundError:
-        print("Error: ChromeDriver executable not found. Please ensure 'chromedriver.exe' is in the correct location.")
-    except webdriver.common.exceptions.WebDriverException as e:
-        if "cannot find Chrome binary" in str(e):
-            print("Error: Chrome browser not found. Please ensure Chrome is installed on your system.")
-        else:
-            print(f"WebDriver error: {str(e)}")
+        st.error("Error: ChromeDriver executable not found. Please ensure 'chromedriver' is in the correct location.")
+        print("Error: ChromeDriver executable not found. Please ensure 'chromedriver' is in the correct location.")
+
     except Exception as e:
+        st.error(f"An unexpected error occurred: {str(e)}")
         print(f"An unexpected error occurred: {str(e)}")
+
 
 
 if st.button("Download files"):
