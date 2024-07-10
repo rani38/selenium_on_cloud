@@ -2,24 +2,23 @@ import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import WebDriverException
 import time
 import os
-
-from chrome_vesion import get_chromedriver_path
+from chrome_vesion import get_chromedriver_path, get_chrome_version, get_chromedriver_version
 
 # Determine the absolute path to the directory containing this file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_DIR = os.path.join(BASE_DIR, 'Input')
 
-# Use a temporary directory for downloads
-st.write(f"Temporary directory for downloads: {INPUT_DIR}")
-
-# Update the path to ChromeDriver (without .exe)
+chrome_version = get_chrome_version()
+chromedriver_version = get_chromedriver_version()
+chromedriver_path = get_chromedriver_path()
 path_to_chrome_driver = get_chromedriver_path()
-st.info(f"Chrome Driver Path is:- {path_to_chrome_driver}")
 
-st.write(f"ChromeDriver path: {path_to_chrome_driver}")
+st.write(f"Temporary directory for downloads: {INPUT_DIR}")
+st.write(f'Chrome Version: {chrome_version}')
+st.write(f'ChromeDriver Version: {chromedriver_version}')
+st.write(f'ChromeDriver Path: {chromedriver_path}')
 
 
 def download_pdf_using_selenium(url, dir):
@@ -36,7 +35,7 @@ def download_pdf_using_selenium(url, dir):
         })
 
         # Set up the Chrome driver
-        service = Service('chromedriver.exe')
+        service = Service(path_to_chrome_driver)
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         # Open the URL
@@ -57,7 +56,6 @@ def download_pdf_using_selenium(url, dir):
     except Exception as e:
         st.error(f"An unexpected error occurred: {str(e)}")
         print(f"An unexpected error occurred: {str(e)}")
-
 
 
 if st.button("Download files"):
