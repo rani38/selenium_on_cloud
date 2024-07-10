@@ -26,28 +26,25 @@ def download_pdf_using_selenium(url, dir):
     st.write(f"Download directory: {dir}")
 
     try:
-        # Set up Chrome options to enable PDF download
         chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-gpu')
         chrome_options.add_experimental_option('prefs', {
             "download.default_directory": dir,
             "download.prompt_for_download": False,
             "plugins.always_open_pdf_externally": True
         })
 
-        # Set up the Chrome driver
         service = Service(path_to_chrome_driver)
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
-        # Open the URL
         driver.get(url)
+        time.sleep(5)  # Increase wait time
 
-        # Wait for the download to complete
-        time.sleep(1)
-
-        # Close the browser
         driver.quit()
-        print("PDF downloaded successfully!")
-        st.success("PDF downloaded successfully!")
+        st.success("PDF download attempt completed.")
 
     except FileNotFoundError:
         st.error("Error: ChromeDriver executable not found. Please ensure 'chromedriver' is in the correct location.")
