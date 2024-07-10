@@ -16,10 +16,11 @@ def get_chromedriver_version():
     return selenium_version
 
 
-st.title('Chrome and ChromeDriver Versions')
+if st.button("Check The Chrome Version"):
+    st.title('Chrome and ChromeDriver Versions')
 
-chrome_version = get_chrome_version()
-chromedriver_version = get_chromedriver_version()
+    chrome_version = get_chrome_version()
+    chromedriver_version = get_chromedriver_version()
 
-st.write(f'Chrome Version: {chrome_version}')
-st.write(f'ChromeDriver Version: {chromedriver_version}')
+    st.write(f'Chrome Version: {chrome_version}')
+    st.write(f'ChromeDriver Version: {chromedriver_version}')
