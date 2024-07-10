@@ -23,13 +23,12 @@ def get_chromedriver_version() -> str:
 
 def get_chromedriver_path():
     try:
-        if platform.system() == "Windows":
-            result = subprocess.run(['where', 'chromedriver'], capture_output=True, text=True)
-        else:
-            result = subprocess.run(['which', 'chromedriver'], capture_output=True, text=True)
+        result = subprocess.run(['which', 'chromedriver'], capture_output=True, text=True, check=True)
         return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return "ChromeDriver not found in PATH. Please check the installation."
     except Exception as e:
-        return str(e)
+        return f"Error finding ChromeDriver: {str(e)}"
 
 
 if st.button("Check The Chrome Version"):
