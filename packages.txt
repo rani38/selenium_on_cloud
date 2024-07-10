@@ -1,2 +1,2 @@
-chromium
-chromium-driver
+chromium-browser=126.0.6478.126-1
+chromium-driver=126.0.6478.126-1
