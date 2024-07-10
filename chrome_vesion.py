@@ -1,19 +1,23 @@
 import streamlit as st
-from selenium import webdriver
+import subprocess
 
 
 def get_chrome_version():
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Optional: Run Chrome in headless mode
-    driver = webdriver.Chrome(options=options)
-    version = driver.capabilities['browserVersion']
-    driver.quit()
-    return version
+    try:
+        result = subprocess.run(['chromium', '--version'], capture_output=True, text=True)
+        version = result.stdout.split()[1]
+        return version
+    except Exception as e:
+        return str(e)
 
 
-def get_chromedriver_version():
-    from selenium import __version__ as selenium_version
-    return selenium_version
+def get_chromedriver_version() -> str:
+    try:
+        result = subprocess.run(['chromedriver', '--version'], capture_output=True, text=True)
+        version = result.stdout.split()[1]
+        return version
+    except Exception as e:
+        return str(e)
 
 
 if st.button("Check The Chrome Version"):
