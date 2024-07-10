@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import time
 import os
+from chrome_vesion import get_chromedriver_path
 
 # Determine the absolute path to the directory containing this file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +14,8 @@ INPUT_DIR = os.path.join(BASE_DIR, 'Input')
 st.write(f"Temporary directory for downloads: {INPUT_DIR}")
 
 # Update the path to ChromeDriver (without .exe)
-path_to_chrome_driver = '/usr/local/bin/chromedriver'
+path_to_chrome_driver = get_chromedriver_path()
+st.info(f"Chrome Driver Path is:- {path_to_chrome_driver}")
 
 st.write(f"ChromeDriver path: {path_to_chrome_driver}")
 
