@@ -8,7 +8,7 @@ from chrome_vesion import get_chromedriver_path, get_chrome_version, get_chromed
 
 # Determine the absolute path to the directory containing this file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_DIR = os.path.join(BASE_DIR, 'Input')
+INPUT_DIR = os.path.join(BASE_DIR, 'Inputs')
 
 chrome_version = get_chrome_version()
 chromedriver_version = get_chromedriver_version()
