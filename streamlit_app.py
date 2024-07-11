@@ -46,37 +46,33 @@ def download_pdf_using_selenium(url, dir):
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         driver.get(url)
-        # time.sleep(10)  # Wait for download to start
+        time.sleep(10)  # Wait for download to start
 
-        # Wait for download to complete (adjust timeout as needed)
-        WebDriverWait(driver, 1).until(
-            lambda x: any([filename.endswith(".pdf") for filename in os.listdir(dir)])
-        )
+        # # Wait for download to complete (adjust timeout as needed)
+        # WebDriverWait(driver, 1).until(
+        #     lambda x: any([filename.endswith(".pdf") for filename in os.listdir(dir)])
+        # )
 
         driver.quit()
 
-        # Verify if a new PDF file was downloaded
-        pdf_files = [f for f in os.listdir(dir) if f.endswith('.pdf')]
-        if pdf_files:
-            st.success(f"PDF downloaded successfully: {pdf_files[-1]}")
-        else:
-            st.warning("No PDF file found after download attempt.")
+        # # Verify if a new PDF file was downloaded
+        # pdf_files = [f for f in os.listdir(dir) if f.endswith('.pdf')]
+        # if pdf_files:
+        #     st.success(f"PDF downloaded successfully: {pdf_files[-1]}")
+        # else:
+        #     st.warning("No PDF file found after download attempt.")
 
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-
-    finally:
-        if 'driver' in locals():
-            driver.quit()
 
 
 if st.button("Download files"):
     links = ['https://link.springer.com/content/pdf/10.1007/s00167-018-4953-z.pdf', 'https://journals.sagepub.com/doi/pdf/10.1007/s11420-019-09684-0', 'https://journals.sagepub.com/doi/pdf/10.1177/2325967120909918', 'https://gupea.ub.gu.se/bitstream/handle/2077/57423/gupea_2077_57423_4.pdf?sequence=4', 'https://link.springer.com/content/pdf/10.1007/s00167-018-4954-y.pdf', 'https://link.springer.com/content/pdf/10.1186/s40634-020-00277-z.pdf']
     start_time = time.time()
-    # for link in links:
-    #     download_pdf_using_selenium(link, INPUT_DIR)
-    with Pool(processes=os.cpu_count()) as pool:
-        pool.starmap(download_pdf_using_selenium, [(link, INPUT_DIR) for link in links])
+    for link in links:
+        download_pdf_using_selenium(link, INPUT_DIR)
+    # with Pool(processes=os.cpu_count()) as pool:
+    #     pool.starmap(download_pdf_using_selenium, [(link, INPUT_DIR) for link in links])
     st.success(
         "Files have been successfully downloaded. You can navigate to 'Get Downloaded Articles' Options and download it.")
 

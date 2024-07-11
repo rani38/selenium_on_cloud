@@ -7,7 +7,7 @@ def get_chrome_version():
     print(f"*"*100)
     st.info(f"*"*100)
     try:
-        result = subprocess.run(['chromium', '--version'], capture_output=True, text=True)
+        result = subprocess.run(['chrome', '--version'], capture_output=True, text=True)
         version = result.stdout.split()[1]
         print(f"chrome version result is :- {result},\\version is {version}")
         st.info(f"chrome version result is :- {result},\\version is {version}")
@@ -41,7 +41,7 @@ def get_chromedriver_path():
 
 if st.button("Check The Chrome Version"):
     st.title('Chrome and ChromeDriver Versions')
-
+    st.info(f"Hello World !")
     chrome_version = get_chrome_version()
     chromedriver_version = get_chromedriver_version()
     chromedriver_path = get_chromedriver_path()
