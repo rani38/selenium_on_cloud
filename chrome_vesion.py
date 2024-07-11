@@ -4,9 +4,13 @@ import platform
 
 
 def get_chrome_version():
+    print(f"*"*100)
+    st.info(f"*"*100)
     try:
         result = subprocess.run(['chromium', '--version'], capture_output=True, text=True)
         version = result.stdout.split()[1]
+        print(f"chrome version result is :- {result},\\version is {version}")
+        st.info(f"chrome version result is :- {result},\\version is {version}")
         return version
     except Exception as e:
         return str(e)
@@ -16,6 +20,7 @@ def get_chromedriver_version() -> str:
     try:
         result = subprocess.run(['chromedriver', '--version'], capture_output=True, text=True)
         version = result.stdout.split()[1]
+        # print(result, '\\n', version)
         return version
     except Exception as e:
         return str(e)
@@ -23,7 +28,10 @@ def get_chromedriver_version() -> str:
 
 def get_chromedriver_path():
     try:
-        result = subprocess.run(['which', 'chromedriver'], capture_output=True, text=True, check=True)
+        if platform.system() == "Windows":
+            result = subprocess.run(['where', 'chromedriver'], capture_output=True, text=True, check=True)
+        else:
+            result = subprocess.run(['which', 'chromedriver'], capture_output=True, text=True, check=True)
         return result.stdout.strip()
     except subprocess.CalledProcessError:
         return "ChromeDriver not found in PATH. Please check the installation."
