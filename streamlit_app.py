@@ -46,7 +46,7 @@ def download_pdf_using_selenium(url, dir):
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         driver.get(url)
-        time.sleep(10)  # Wait for download to start
+        # time.sleep(10)  # Wait for download to start
 
         # # Wait for download to complete (adjust timeout as needed)
         # WebDriverWait(driver, 1).until(
